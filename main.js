@@ -8,17 +8,35 @@
 // 7. Als dit niet zo is, zorg dan dat de waarschuwing verdwijnt
 // 8. Herhaal deze stappen voor het wachtwoord
 
+// sla de referenties op naar de inputvelden
+const userNameInput = document.getElementById('username');
+const passwordInput = document.getElementById('password');
 
-function handeEvent(e) {
-    if (userNameInput.equals("@")) {
-        const warning = `<p>U heeft een @ gebruikt</p>`;
-        return warning;
+// Warning Messages
+const usernameWarning = document.getElementById('username-warning');
+const passwordWarning = document.getElementById('password-warning');
+
+
+// Eventlistener
+userNameInput.addEventListener('keyup', checkUsername);
+userNameInput.addEventListener('keyup', checkPassWord);
+
+// maak een functie die de username input checkt en door de event listener wordt aangeroepen
+function checkUsername(e) {
+    if (e.target.value.includes("@")) {
+        usernameWarning.textContent = 'Gebruikersnaam mag geen @ bevatten';
+    } else {
+        usernameWarning.textContent = '';
     }
-    console.log(e);
 }
 
-
-Const userNameInput = document.getById('username');
-Const userNameWarning = document.getById('usernameWarning');
-
-userNameInput.addEventListener('click', handleEvent);
+// maak een functie die de password input checkt en door de event listener wordt aangeroepen
+function checkPassWord (e) {
+    // Als het invoerveld leeg is, of wanneer het wachtwoord lang genoeg is willen we de melding NIET tonen
+    if (e.target.value === '' || e.target.value.length > 6) {
+        passwordWarning.textContent = '';
+    } else {
+        // in alle andere gevallen (e.target.value !== '' && e.target.value.length <= 6) tonen we de melding WEL
+        passwordWarning.textContent = 'Wachtwoord is te kort, gebruik minimaal 6 tekens';
+    }
+}
